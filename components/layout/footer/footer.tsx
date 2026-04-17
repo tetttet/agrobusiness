@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Wheat,
   MapPin,
@@ -17,8 +16,6 @@ import {
   DEFAULT_CENTER_NAV,
   DEFAULT_LEFT_NAV,
 } from "@/constants/header.constants";
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface FooterLinkGroup {
   heading: string;
@@ -191,112 +188,10 @@ const Footer = ({
   copyright,
   className = "",
 }: FooterProps) => {
-  const footerRef = useRef<HTMLElement>(null);
-  const logoFooterRef = useRef<HTMLAnchorElement>(null);
-  const descRef = useRef<HTMLParagraphElement>(null);
-  const colRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const contactsRef = useRef<HTMLDivElement>(null);
-  const bottomBarRef = useRef<HTMLDivElement>(null);
-  const dividerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
 
   const year = new Date().getFullYear();
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        dividerRef.current,
-        { scaleX: 0, opacity: 0 },
-        {
-          scaleX: 1,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: "top 88%",
-          },
-        },
-      );
-
-      gsap.fromTo(
-        [logoFooterRef.current, descRef.current],
-        { y: 28, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.75,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: logoFooterRef.current,
-            start: "top 92%",
-          },
-        },
-      );
-
-      colRefs.current.forEach((col, i) => {
-        if (!col) return;
-        const heading = col.querySelector(".col-heading");
-        const links = col.querySelectorAll(".col-link");
-
-        gsap.fromTo(
-          heading,
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.55,
-            ease: "power3.out",
-            delay: i * 0.07,
-            scrollTrigger: { trigger: col, start: "top 93%" },
-          },
-        );
-
-        gsap.fromTo(
-          links,
-          { y: 16, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.45,
-            stagger: 0.06,
-            ease: "power3.out",
-            delay: 0.1 + i * 0.07,
-            scrollTrigger: { trigger: col, start: "top 93%" },
-          },
-        );
-      });
-
-      gsap.fromTo(
-        contactsRef.current?.children ?? [],
-        { x: -18, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: "power3.out",
-          scrollTrigger: { trigger: contactsRef.current, start: "top 93%" },
-        },
-      );
-
-      gsap.fromTo(
-        bottomBarRef.current,
-        { y: 14, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: "power3.out",
-          scrollTrigger: { trigger: bottomBarRef.current, start: "top 98%" },
-        },
-      );
-    }, footerRef);
-
-    return () => ctx.revert();
-  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -307,7 +202,6 @@ const Footer = ({
 
   return (
     <footer
-      ref={footerRef}
       className={cn(
         "relative w-full overflow-hidden bg-black text-white",
         className,
@@ -324,11 +218,7 @@ const Footer = ({
         className="pointer-events-none absolute bottom-0 right-0 h-[280px] w-[280px] rounded-full bg-[#4b2a23]/10 blur-[100px]"
       />
 
-      <div
-        ref={dividerRef}
-        className="mx-6 origin-left"
-        style={{ transform: "scaleX(0)" }}
-      >
+      <div className="mx-6">
         <div className="h-px w-full bg-linear-to-r from-transparent via-[#4b2a23] to-transparent" />
       </div>
 
@@ -336,7 +226,6 @@ const Footer = ({
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.2fr_auto_auto_auto_1fr] lg:gap-10 xl:gap-16">
           <div className="flex flex-col">
             <Link
-              ref={logoFooterRef}
               href={logoHref}
               className="mb-4 inline-block text-[28px] font-semibold leading-none tracking-[-0.05em] text-white transition-all duration-300 hover:opacity-80 sm:text-[32px]"
               onMouseEnter={(e) =>
@@ -363,7 +252,6 @@ const Footer = ({
             </div>
 
             <p
-              ref={descRef}
               className="mt-3 max-w-[320px] text-[14px] leading-relaxed text-white/60"
             >
               {description}
@@ -406,14 +294,8 @@ const Footer = ({
             </div>
           </div>
 
-          {groups.map((group, i) => (
-            <div
-              key={group.heading}
-              ref={(el) => {
-                colRefs.current[i] = el;
-              }}
-              className="flex flex-col"
-            >
+          {groups.map((group) => (
+            <div key={group.heading} className="flex flex-col">
               <p className="col-heading mb-5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
                 {group.heading}
               </p>
@@ -456,7 +338,7 @@ const Footer = ({
               Контакты
             </p>
 
-            <div ref={contactsRef} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
               {contacts.address && (
                 <a
                   href={`https://maps.google.com?q=${encodeURIComponent(
@@ -533,10 +415,7 @@ const Footer = ({
           </div>
         </div>
 
-        <div
-          ref={bottomBarRef}
-          className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 text-[13px] text-white/35 sm:flex-row"
-        >
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 text-[13px] text-white/35 sm:flex-row">
           <p>
             © {year} {logoText}. Все права защищены.
             {copyright && ` ${copyright}`}

@@ -181,13 +181,17 @@ export default function HeroVideo() {
             textRefs.current[i] = el;
           }}
           className="absolute inset-0 flex flex-col justify-center pointer-events-none"
-          style={{ paddingLeft: "calc(6vw + 2.2rem)", paddingTop: "6vh" }}
+          style={{
+            paddingLeft: "clamp(1.2rem, calc(6vw + 0.85rem), 8rem)",
+            paddingRight: "1.2rem",
+            paddingTop: "clamp(3.5rem, 6vh, 6rem)",
+          }}
         >
           {/* Тег */}
           <span
-            className="ac uppercase tracking-[0.32em] mb-5 opacity-0"
+            className="ac mb-4 uppercase tracking-[0.28em] opacity-0 sm:mb-5 sm:tracking-[0.32em]"
             style={{
-              fontSize: "clamp(10px, 0.85vw, 12px)",
+              fontSize: "clamp(9px, 2.4vw, 12px)",
               color: "#ffffff",
             }}
           >
@@ -198,9 +202,10 @@ export default function HeroVideo() {
           <h1
             className="ac text-white font-bold uppercase leading-none opacity-0"
             style={{
-              fontSize: "clamp(3rem, 8.5vw, 6rem)",
+              fontSize: "clamp(2.2rem, min(11vw, 7vh), 6rem)",
               whiteSpace: "pre-line",
               letterSpacing: "0.01em",
+              lineHeight: 0.92,
               textShadow: "0 3px 36px rgba(0,0,0,0.55)",
             }}
           >
@@ -211,9 +216,9 @@ export default function HeroVideo() {
           <p
             className="ac text-white/70 font-light opacity-0"
             style={{
-              fontSize: "clamp(13px, 1.25vw, 17px)",
-              letterSpacing: "0.04em",
-              maxWidth: "38ch",
+              fontSize: "clamp(12px, min(3.8vw, 2.2vh), 17px)",
+              letterSpacing: "0.03em",
+              maxWidth: "30ch",
             }}
           >
             {s.subtitle}
@@ -221,14 +226,14 @@ export default function HeroVideo() {
 
           {/* CTA */}
           <button
-            className="ac pointer-events-auto mt-8 w-fit font-medium uppercase
-                       px-7 py-3
+            className="ac pointer-events-auto mt-6 w-fit font-medium uppercase
+                       px-5 py-2.5 sm:mt-8 sm:px-7 sm:py-3
                        border bg-white text-black
                        hover:text-white
                        transition-colors duration-300 opacity-0"
             style={{
-              fontSize: "clamp(11px, 0.88vw, 13px)",
-              letterSpacing: "0.22em",
+              fontSize: "clamp(10px, 2.8vw, 13px)",
+              letterSpacing: "0.18em",
               borderColor: "#ffffff",
             }}
             onClick={() => router.push(s.href)}
@@ -247,10 +252,10 @@ export default function HeroVideo() {
 
       {/* ── Счётчик слайдов ─────────────────────────────── */}
       <div
-        className="absolute bottom-12 right-[5vw] flex items-center gap-2 text-white/50"
+        className="absolute bottom-9 right-4 flex items-center gap-1.5 text-white/50 sm:bottom-12 sm:right-[5vw] sm:gap-2"
         style={{
-          fontSize: "clamp(11px, 0.9vw, 13px)",
-          letterSpacing: "0.22em",
+          fontSize: "clamp(10px, 2.6vw, 13px)",
+          letterSpacing: "0.18em",
         }}
       >
         <span className="text-white font-medium">
@@ -261,7 +266,7 @@ export default function HeroVideo() {
       </div>
 
       {/* ── Dot навигация ───────────────────────────────── */}
-      <div className="absolute bottom-[2.8rem] left-1/2 -translate-x-1/2 flex items-center gap-[6px]">
+      <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-[5px] sm:bottom-[2.8rem] sm:gap-[6px]">
         {slides.map((_, i) => (
           <button
             key={i}
@@ -271,7 +276,7 @@ export default function HeroVideo() {
             }}
             className="h-[5px] rounded-sm transition-all duration-500 cursor-pointer"
             style={{
-              width: i === current ? "2rem" : "5px",
+              width: i === current ? "clamp(1.5rem, 8vw, 2rem)" : "5px",
               background: i === current ? ACCENT : "rgba(255,255,255,0.35)",
             }}
           />

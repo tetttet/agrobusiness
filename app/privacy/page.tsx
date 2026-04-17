@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
+import { createPageTitle } from "@/constants/site-metadata";
 
 export const metadata: Metadata = {
-  title: "Политика конфиденциальности | Agro Business",
+  title: createPageTitle("Политика конфиденциальности"),
   description:
     "Информация о том, какие данные может обрабатывать Agro Business и как они защищаются.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 const UPDATED_AT = "31 марта 2026";

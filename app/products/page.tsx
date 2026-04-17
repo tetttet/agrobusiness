@@ -1,7 +1,28 @@
-import React from "react";
+import type { Metadata } from "next";
 import ProductsList from "@/components/products/list-products";
 import { products } from "@/constants/products.constants";
 import CatalogHeader from "@/components/products/catalog-header";
+import {
+  CATALOG_DESCRIPTION,
+  createPageTitle,
+} from "@/constants/site-metadata";
+
+export const metadata: Metadata = {
+  title: createPageTitle("Каталог сельхозтехники"),
+  description: CATALOG_DESCRIPTION,
+  alternates: {
+    canonical: "/products",
+  },
+  openGraph: {
+    title: createPageTitle("Каталог сельхозтехники"),
+    description: CATALOG_DESCRIPTION,
+    url: "/products",
+  },
+  twitter: {
+    title: createPageTitle("Каталог сельхозтехники"),
+    description: CATALOG_DESCRIPTION,
+  },
+};
 
 const Page = () => {
   return (

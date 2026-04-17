@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import SearchPageContent from "@/components/search/search-page-content";
 import { products } from "@/constants/products.constants";
 import type { SearchSortOption } from "@/utils/search.utils";
+import { createPageTitle } from "@/constants/site-metadata";
 
 type SearchParams = Promise<{
   q?: string | string[] | undefined;
@@ -41,11 +42,15 @@ export async function generateMetadata({
 
   return {
     title: normalizedQuery
-      ? `Поиск: ${normalizedQuery} | Agro Business`
-      : "Поиск по каталогу | Agro Business",
+      ? createPageTitle(`Поиск: ${normalizedQuery}`)
+      : createPageTitle("Поиск по каталогу"),
     description: normalizedQuery
       ? `Результаты поиска по запросу "${normalizedQuery}" в каталоге Agro Business.`
       : "Умный поиск по каталогу техники Agro Business.",
+    robots: {
+      index: false,
+      follow: true,
+    },
   };
 }
 

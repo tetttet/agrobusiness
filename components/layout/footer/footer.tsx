@@ -11,8 +11,6 @@ import {
   Mail,
   ArrowUpRight,
   Instagram,
-  Youtube,
-  Send,
   ChevronRight,
 } from "lucide-react";
 import {
